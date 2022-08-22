@@ -1,3 +1,5 @@
+using System;
+using ClienteApi.Data.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,17 +11,24 @@ namespace ClienteApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) => Configuration = configuration;
-
         public IConfiguration Configuration { get; }
+
+        public Startup(IHostEnvironment hostEnvironment)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TechTest.ClienteApi", Version = "v1" });
-            });
+            services.AddJsonConfigure();
+            services.ResolveSwaggerConfig();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -28,7 +37,7 @@ namespace ClienteApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TechTest.ClienteApi v1"));
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();

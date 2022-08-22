@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace ClienteApi.Models
@@ -8,5 +10,7 @@ namespace ClienteApi.Models
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Notes { get; set; }
+
+        public List<Expense> Expenses { get; set; }
     }
 }

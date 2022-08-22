@@ -11,7 +11,7 @@ namespace ClienteApi.Data
 
     public sealed class ClienteDbContext : DbContext
     {
-        private DbSetConfig SetConfig { get; }
+        private DbSetConfig SetConfig { get; set; }
 
         public ClienteDbContext(DbContextOptions<ClienteDbContext> opt, DbSetConfig dbSetConfig) : base(opt)
         {
@@ -19,6 +19,11 @@ namespace ClienteApi.Data
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
+
+        // protected override void OnConfiguring(DbContextOptionsBuilder options)
+        // {
+        //     base.OnConfiguring(options.UseSqlServer("Data Source=L-PT-5CG2144WTP\\SQLEXPRESS;Database=usersDb;Password=A123456s;User ID=sa;Trusted_Connection=True;"));
+        // }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

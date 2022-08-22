@@ -7,12 +7,6 @@ namespace ClienteApi.Models
     {
         public int UserId { get; set; }
 
-        public ExpenseDescription ExpenseDescription { get; set; }
-
-        public TypeOfLocation TypeOfLocation { get; set; }
-
-        public TypeOfAccommodation TypeOfAccommodation { get; set; }
-
         public decimal Value { get; set; }
 
         public DateTime ExpireIn { get; set; }
@@ -23,5 +17,11 @@ namespace ClienteApi.Models
         
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Notes { get; set; }
+
+        public ExpenseDescription ExpenseDescription { get; set; }
+
+        public TypeOfLocation TypeOfLocation { get; set; }
+
+        public TypeOfAccommodation TypeOfAccommodation { get; set; }
     }
 }

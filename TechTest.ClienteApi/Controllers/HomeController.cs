@@ -5,7 +5,7 @@ namespace ClienteApi.Controllers
 {
     [ApiController]
     [Route("")]
-    public class HomeController : ControllerBase
+    public class HomeController : BaseController
     {
         [HttpGet("")]
         public IActionResult Get([FromServices]IConfiguration config)
