@@ -7,7 +7,6 @@ using ClienteApi.ViewModels.TypeOfAccommodation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Org.BouncyCastle.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ using System.Threading.Tasks;
 namespace ClienteApi.Controllers
 {
     [ApiController]
-    [Route("v1/TipoDeAcomodacoes")]
+    [Route("v1/tipodeacomodacoes")]
     public class TypeOfAccommodationController : BaseController
     {
         [HttpGet("")]
@@ -135,6 +134,6 @@ namespace ClienteApi.Controllers
             }
         }
 
-        private List<TypeOfAccommodation> GetAcomodacoes(ClienteDbContext context) => context.TypeOfAccommodations.ToList();
+        private static List<TypeOfAccommodation> GetAcomodacoes(ClienteDbContext context) => context.TypeOfAccommodations.ToList();
     }
 }
