@@ -3,15 +3,11 @@ using System.Text.Json.Serialization;
 
 namespace ClienteApi.Models
 {
-    public class Expense : Entity
+    public class Expense
     {
+        public int Id { get; set; }
+
         public int UserId { get; set; }
-
-        public ExpenseDescription ExpenseDescription { get; set; }
-
-        public TypeOfLocation TypeOfLocation { get; set; }
-
-        public TypeOfAccommodation TypeOfAccommodation { get; set; }
 
         public decimal Value { get; set; }
 
@@ -23,5 +19,11 @@ namespace ClienteApi.Models
         
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Notes { get; set; }
+
+        public ExpenseDescription ExpenseDescription { get; set; }
+
+        public TypeOfLocation TypeOfLocation { get; set; }
+
+        public TypeOfAccommodation TypeOfAccommodation { get; set; }
     }
 }
