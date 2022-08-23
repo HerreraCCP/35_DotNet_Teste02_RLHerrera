@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ClienteApi.Data.Configurations;
 using ClienteApi.Data.Mappings;
 using ClienteApi.Models;
 using System;
@@ -37,7 +36,7 @@ namespace ClienteApi.Data
             modelBuilder.ApplyConfiguration(new TypeOfLocationMap());
         }
 
-        private Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in _clienteDbContext.ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("CreatedIn") != null))
             {

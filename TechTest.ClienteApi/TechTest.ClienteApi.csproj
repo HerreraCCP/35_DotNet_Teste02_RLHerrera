@@ -16,7 +16,10 @@
 
 	<ItemGroup>
 		<Folder Include="Attributes" />
-		<Folder Include="Services" />
+		<Folder Include="Services\Archive\" />
+		<Folder Include="Services\Expense\" />
+		<Folder Include="Services\ExpenseDescription\" />
+		<Folder Include="Services\TypeOfLocation\" />
 	</ItemGroup>
 
 	<ItemGroup>
