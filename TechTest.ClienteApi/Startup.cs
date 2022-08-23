@@ -1,11 +1,12 @@
-using System;
+using ClienteApi.Data;
 using ClienteApi.Data.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using System;
 
 namespace ClienteApi
 {
@@ -20,6 +21,7 @@ namespace ClienteApi
                 .AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
@@ -29,6 +31,7 @@ namespace ClienteApi
             services.AddJsonConfigure();
             services.ResolveSwaggerConfig();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddDbContext<ClienteDbContext>(options => options.UseSqlServer("Data Source=L-PT-5CG2144WTP\\SQLEXPRESS;Database=UsersDb;Password=A123456s;User ID=sa;Trusted_Connection=True;"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,9 +43,12 @@ namespace ClienteApi
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseStaticFiles();
             app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseHttpsRedirection();
+            app.UseResponseCompression();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

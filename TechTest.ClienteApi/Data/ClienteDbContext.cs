@@ -1,60 +1,51 @@
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ClienteApi.Data.Configurations;
+using ClienteApi.Data.Mappings;
+using ClienteApi.Models;
+using System;
+using System.Linq;
 
 namespace ClienteApi.Data
 {
-    using static Configurations.MapConfiguration;
-
     public sealed class ClienteDbContext : DbContext
     {
-        private DbSetConfig SetConfig { get; set; }
+        private readonly ClienteDbContext _clienteDbContext;
 
-        public ClienteDbContext(DbContextOptions<ClienteDbContext> opt, DbSetConfig dbSetConfig) : base(opt)
+        public ClienteDbContext(DbContextOptions<ClienteDbContext> options, ClienteDbContext clienteDbContext) : base(options)
         {
-            SetConfig = dbSetConfig;
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            ChangeTracker.AutoDetectChangesEnabled = false;
+            _clienteDbContext = clienteDbContext;
         }
 
-        // protected override void OnConfiguring(DbContextOptionsBuilder options)
-        // {
-        //     base.OnConfiguring(options.UseSqlServer("Data Source=L-PT-5CG2144WTP\\SQLEXPRESS;Database=usersDb;Password=A123456s;User ID=sa;Trusted_Connection=True;"));
-        // }
+        public DbSet<Archive> Archives { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        public DbSet<Expense> Expenses { get; set; }
+
+        public DbSet<ExpenseDescription> ExpenseDescriptions { get; set; }
+
+        public DbSet<TypeOfAccommodation> TypeOfAccommodations { get; set; }
+
+        public DbSet<TypeOfLocation> TypeOfLocations { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            foreach (var property in builder.Model.GetEntityTypes()
-                         .SelectMany(e => e.GetProperties()
-                             .Where(p => p.ClrType == typeof(string))))
-                property.SetColumnType("varchar(100)");
-
-            builder.ApplyConfigurationsFromAssembly(typeof(ClienteDbContext).Assembly);
-
-            foreach (var relationship in builder.Model
-                         .GetEntityTypes()
-                         .SelectMany(e => e.GetForeignKeys()))
-                relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
-
-            ResolveMapConfiguration(builder);
-
-            base.OnModelCreating(builder);
+            modelBuilder.ApplyConfiguration(new ArchivesMap());
+            modelBuilder.ApplyConfiguration(new ExpenseDescriptionMap());
+            modelBuilder.ApplyConfiguration(new ExpenseMap());
+            modelBuilder.ApplyConfiguration(new TypeOfAccommodationMap());
+            modelBuilder.ApplyConfiguration(new TypeOfLocationMap());
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        private Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries()
-                         .Where(entry => entry.Entity.GetType().GetProperty("DataCadastro") != null))
+            foreach (var entry in _clienteDbContext.ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("CreatedIn") != null))
             {
                 if (entry.State == EntityState.Added) entry.Property("CreatedIn").CurrentValue = DateTime.UtcNow;
                 if (entry.State == EntityState.Modified) entry.Property("CreatedIn").IsModified = false;
             }
 
-            return base.SaveChangesAsync(cancellationToken);
+            return _clienteDbContext.SaveChangesAsync(cancellationToken);
         }
-        
     }
 }
