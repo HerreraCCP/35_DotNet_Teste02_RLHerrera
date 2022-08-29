@@ -7,19 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17" />
+		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="5.0.17" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Attributes" />
-		<Folder Include="Services\Archive\" />
-		<Folder Include="Services\Expense\" />
-		<Folder Include="Services\ExpenseDescription\" />
-		<Folder Include="Services\TypeOfLocation\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -8,7 +8,7 @@ namespace ClienteApi.Data.Configurations
 {
     public static class MvcConfig
     {
-        public static IServiceCollection AddJsonConfigure(this IServiceCollection services)
+        public static void AddJsonMvcConfigure(this IServiceCollection services)
         {
             services.AddMemoryCache();
             services.AddResponseCompression(options => options.Providers.Add<GzipCompressionProvider>());
@@ -17,7 +17,6 @@ namespace ClienteApi.Data.Configurations
                 .AddControllers()
                 .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true)
                 .AddJsonOptions(x => x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault);
-            return services;
         }
     }
 }

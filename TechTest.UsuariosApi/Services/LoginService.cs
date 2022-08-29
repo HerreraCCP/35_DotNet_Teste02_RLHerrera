@@ -1,8 +1,7 @@
-using System.Linq;
 using FluentResults;
-using UsuariosApi.Data.Requests;
 using Microsoft.AspNetCore.Identity;
-using UsuariosApi.Models;
+using System.Linq;
+using UsuariosApi.Data.Requests;
 
 namespace UsuariosApi.Services
 {
@@ -28,10 +27,9 @@ namespace UsuariosApi.Services
                 .UserManager
                 .Users
                 .FirstOrDefault(usuario => usuario.NormalizedUserName == request.Username.ToUpper());
-            var token =
-                _tokenService.CreateToken(identityUser, _signInManager.UserManager.GetRolesAsync(identityUser).Result.FirstOrDefault());
+            var roles = _signInManager.UserManager.GetRolesAsync(identityUser).Result.FirstOrDefault();
+            var token = _tokenService.CreateToken(identityUser, roles);
             return Result.Ok();
-            //check
         }
 
         public Result ResetUserPassword(PerformResetRequest request)
@@ -48,8 +46,7 @@ namespace UsuariosApi.Services
             var identityUser = RecuperaUsuarioPorEmail(request.Email);
             return identityUser == null
                 ? Result.Fail("Falha ao solicitar redefinição")
-                : Result.Ok()
-                    .WithSuccess(_signInManager.UserManager.GeneratePasswordResetTokenAsync(identityUser).Result);
+                : Result.Ok().WithSuccess(_signInManager.UserManager.GeneratePasswordResetTokenAsync(identityUser).Result);
         }
 
         private IdentityUser<int> RecuperaUsuarioPorEmail(string email) =>

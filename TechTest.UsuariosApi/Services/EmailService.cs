@@ -1,9 +1,8 @@
-using MimeKit;
 using MailKit.Net.Smtp;
-using UsuariosApi.Models;
-using UsuariosApi.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MimeKit;
+using UsuariosApi.Models;
 
 namespace UsuariosApi.Services
 {
@@ -38,11 +37,9 @@ namespace UsuariosApi.Services
             using var client = new SmtpClient();
             try
             {
-                client.Connect(_configuration.GetValue<string>("EmailSettings:SmtpServer"),
-                    _configuration.GetValue<int>("EmailSettings:Port"), true);
+                client.Connect(_configuration.GetValue<string>("EmailSettings:SmtpServer"), _configuration.GetValue<int>("EmailSettings:Port"), true);
                 client.AuthenticationMechanisms.Remove("XOUATH2");
-                client.Authenticate(_configuration.GetValue<string>("EmailSettings:From"),
-                    _configuration.GetValue<string>("EmailSettings:Password"));
+                client.Authenticate(_configuration.GetValue<string>("EmailSettings:From"), _configuration.GetValue<string>("EmailSettings:Password"));
                 client.Send(emailMessage);
             }
             catch

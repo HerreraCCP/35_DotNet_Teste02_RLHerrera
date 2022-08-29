@@ -14,9 +14,8 @@ namespace UsuariosApi.Configurations
             services.AddScoped<TokenService, TokenService>();
             services.AddScoped<LoginService, LoginService>();
             services.AddScoped<LogoutService, LogoutService>();
-
             services.AddSingleton(typeof(ILogger), services.BuildServiceProvider().GetService<ILogger<EmailService>>());
-            
+
             return services;
         }
     }

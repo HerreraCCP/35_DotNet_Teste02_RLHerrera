@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentResults;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
-using UsuariosApi.Data.Dtos;
 using UsuariosApi.Data.Dtos.Usuario;
 using UsuariosApi.Data.Requests;
 using UsuariosApi.Models;
@@ -14,12 +15,11 @@ namespace UsuariosApi.Services
     public class RegisterService
     {
         private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private UserManager<IdentityUser<int>> _userManager;
         private readonly EmailService _emailService;
         private RoleManager<IdentityRole<int>> _roleManager;
 
-        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService,
-            RoleManager<IdentityRole<int>> roleManager)
+        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService, RoleManager<IdentityRole<int>> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -32,9 +32,11 @@ namespace UsuariosApi.Services
             var user = _mapper.Map<User>(createDto);
             var userIdentity = _mapper.Map<IdentityUser<int>>(user);
             var resultIdentity = _userManager.CreateAsync(userIdentity, createDto.Password);
-            var roleManagerResult = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result;
-            var usuarioRoleResult = _userManager.AddToRolesAsync(userIdentity, new List<string> { "admin" }).Result;
-            // var usuarioRoleResult = _userManager.AddToRolesAsync(userIdentity, "admin").Result;
+
+            var rnd = new Random();
+
+            if (rnd.Next(1, 13) % 2 == 0) _userManager.AddToRoleAsync(userIdentity, "user");
+            else _userManager.AddToRoleAsync(userIdentity, "regular");
 
             if (!resultIdentity.Result.Succeeded) return Result.Fail("Deu ruim ao cadastrar usuário");
 

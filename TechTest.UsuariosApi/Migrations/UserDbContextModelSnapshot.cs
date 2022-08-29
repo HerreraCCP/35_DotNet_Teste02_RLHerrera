@@ -46,6 +46,22 @@ namespace UsuariosApi.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 99999999,
+                            ConcurrencyStamp = "3a407a4f-1451-469e-975c-93ed7211913d",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ConcurrencyStamp = "30b34b43-50bd-4006-b5c1-9c7881d1a9fa",
+                            Name = "regular",
+                            NormalizedName = "REGULAR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -136,6 +152,24 @@ namespace UsuariosApi.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 99999999,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f8ad2981-0e4c-444d-af62-bbf48f26e7d3",
+                            Email = "herrera.ccp@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HERRERA.CCP@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMEOEDZV8AGdn66i0cVFUqpAGN0gSOUJsC1A7C0syuHM3MC7r9CpKnAHhl2bX480AA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "bc475f09-9b69-4210-a9e2-be21a253e668",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -195,6 +229,13 @@ namespace UsuariosApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 99999999,
+                            RoleId = 99999999
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>

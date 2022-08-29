@@ -19,7 +19,7 @@ namespace ClienteApi.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ClienteApi.Models.Archive", b =>
+            modelBuilder.Entity("ClienteApi.Models.Acomodacao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -28,18 +28,50 @@ namespace ClienteApi.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("File")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
+                    b.Property<string>("Anotacoes")
                         .HasMaxLength(150)
                         .HasColumnType("NVARCHAR(150)")
                         .HasColumnName("Notes");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("DescricaoDaAcomodacao")
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR(100)")
+                        .HasColumnName("DescricaoDaAcomodacao");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Id" }, "IX_File_Acomodacao")
+                        .IsUnique();
+
+                    b.ToTable("Acomodacao");
+                });
+
+            modelBuilder.Entity("ClienteApi.Models.Arquivo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Anotacoes")
+                        .HasMaxLength(150)
+                        .HasColumnType("NVARCHAR(150)")
+                        .HasColumnName("Notes");
+
+                    b.Property<int?>("DespesasId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("File")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DespesasId");
 
                     b.HasIndex(new[] { "Id" }, "IX_File_Archive")
                         .IsUnique();
@@ -47,7 +79,7 @@ namespace ClienteApi.Migrations
                     b.ToTable("Archive");
                 });
 
-            modelBuilder.Entity("ClienteApi.Models.Expense", b =>
+            modelBuilder.Entity("ClienteApi.Models.DescricaoDespesa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,181 +88,123 @@ namespace ClienteApi.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BarCode")
-                        .IsRequired()
-                        .HasMaxLength(155)
-                        .HasColumnType("NVARCHAR(155)")
-                        .HasColumnName("BarCode");
-
-                    b.Property<DateTime>("CreatedIn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 8, 23, 12, 25, 47, 152, DateTimeKind.Utc).AddTicks(2336))
-                        .HasColumnName("CreatedIn");
-
-                    b.Property<int?>("ExpenseDescriptionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ExpireIn")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("ExpireIn");
-
-                    b.Property<string>("Notes")
+                    b.Property<string>("Anotacoes")
                         .HasMaxLength(150)
                         .HasColumnType("NVARCHAR(150)")
                         .HasColumnName("Notes");
 
-                    b.Property<int?>("TypeOfAccommodationId")
+                    b.Property<string>("DescricaoTipoDeDepesa")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR(50)")
+                        .HasColumnName("DescricaoTipoDeDepesa");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Id" }, "IX_DescricaoTipoDespesas_DescricaoDespesa")
+                        .IsUnique();
+
+                    b.ToTable("DescricaoDespesa");
+                });
+
+            modelBuilder.Entity("ClienteApi.Models.Despesa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AcomodacaoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TypeOfLocationId")
+                    b.Property<string>("Anotacoes")
+                        .HasMaxLength(150)
+                        .HasColumnType("NVARCHAR(150)")
+                        .HasColumnName("Anotacoes");
+
+                    b.Property<string>("CodigoDeBarras")
+                        .IsRequired()
+                        .HasMaxLength(155)
+                        .HasColumnType("NVARCHAR(155)")
+                        .HasColumnName("CodigoDeBarras");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValue(new DateTime(2022, 8, 29, 13, 52, 29, 806, DateTimeKind.Utc).AddTicks(7346))
+                        .HasColumnName("CriadoEm");
+
+                    b.Property<DateTime>("DataExpiracao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataExpiracao");
+
+                    b.Property<int?>("DescricaoDespesaId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Value")
+                    b.Property<decimal>("Valor")
                         .HasColumnType("decimal")
-                        .HasColumnName("Value");
+                        .HasColumnName("Valor");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExpenseDescriptionId");
+                    b.HasIndex("AcomodacaoId");
 
-                    b.HasIndex("TypeOfAccommodationId");
+                    b.HasIndex("DescricaoDespesaId");
 
-                    b.HasIndex("TypeOfLocationId");
-
-                    b.HasIndex(new[] { "Id" }, "IX_BarCode_Expense")
+                    b.HasIndex(new[] { "Id" }, "IX_CodigoDeBarras_Despesas")
                         .IsUnique();
 
-                    b.ToTable("Expense");
+                    b.ToTable("Despesas");
                 });
 
-            modelBuilder.Entity("ClienteApi.Models.ExpenseDescription", b =>
+            modelBuilder.Entity("ClienteApi.Models.Arquivo", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DescriptionOfExpensive")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR(50)")
-                        .HasColumnName("DescriptionOfExpensive");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(150)
-                        .HasColumnType("NVARCHAR(150)")
-                        .HasColumnName("Notes");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Id" }, "IX_ExpenseDescription_DescriptionOfExpensive")
-                        .IsUnique();
-
-                    b.ToTable("ExpenseDescription");
-                });
-
-            modelBuilder.Entity("ClienteApi.Models.TypeOfAccommodation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DescriptionOfAccommodation")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("NVARCHAR(20)")
-                        .HasColumnName("DescriptionOfAccommodation");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(155)
-                        .HasColumnType("NVARCHAR(155)")
-                        .HasColumnName("Notes");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Id" }, "IX_TypeOfAccommodation_DescriptionOfAccommodation")
-                        .IsUnique();
-
-                    b.ToTable("TypeOfAccommodation");
-                });
-
-            modelBuilder.Entity("ClienteApi.Models.TypeOfLocation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DescriptionOfLocation")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("NVARCHAR(20)")
-                        .HasColumnName("DescriptionOfLocation");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(150)
-                        .HasColumnType("NVARCHAR(150)")
-                        .HasColumnName("Notes");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Id" }, "IX_TypeOfLocation_DescriptionOfLocation")
-                        .IsUnique();
-
-                    b.ToTable("TypeOfLocation");
-                });
-
-            modelBuilder.Entity("ClienteApi.Models.Expense", b =>
-                {
-                    b.HasOne("ClienteApi.Models.ExpenseDescription", "ExpenseDescription")
-                        .WithMany("Expenses")
-                        .HasForeignKey("ExpenseDescriptionId")
-                        .HasConstraintName("FK_Expenses_ExpenseDescription")
+                    b.HasOne("ClienteApi.Models.Despesa", "Despesas")
+                        .WithMany("Arquivos")
+                        .HasForeignKey("DespesasId")
+                        .HasConstraintName("FK_Despesas_Arquivos")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ClienteApi.Models.TypeOfAccommodation", "TypeOfAccommodation")
-                        .WithMany("Expenses")
-                        .HasForeignKey("TypeOfAccommodationId")
-                        .HasConstraintName("FK_Expenses_TypeOfAccommodation")
+                    b.Navigation("Despesas");
+                });
+
+            modelBuilder.Entity("ClienteApi.Models.Despesa", b =>
+                {
+                    b.HasOne("ClienteApi.Models.Acomodacao", "Acomodacao")
+                        .WithMany("Despesas")
+                        .HasForeignKey("AcomodacaoId")
+                        .HasConstraintName("FK_Despesas_Acomodacao")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ClienteApi.Models.TypeOfLocation", "TypeOfLocation")
-                        .WithMany("Expenses")
-                        .HasForeignKey("TypeOfLocationId")
-                        .HasConstraintName("FK_Expenses_TypeOfLocation")
+                    b.HasOne("ClienteApi.Models.DescricaoDespesa", "DescricaoDespesa")
+                        .WithMany("Despesas")
+                        .HasForeignKey("DescricaoDespesaId")
+                        .HasConstraintName("FK_Despesas_DescricaoDespesa")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("ExpenseDescription");
+                    b.Navigation("Acomodacao");
 
-                    b.Navigation("TypeOfAccommodation");
-
-                    b.Navigation("TypeOfLocation");
+                    b.Navigation("DescricaoDespesa");
                 });
 
-            modelBuilder.Entity("ClienteApi.Models.ExpenseDescription", b =>
+            modelBuilder.Entity("ClienteApi.Models.Acomodacao", b =>
                 {
-                    b.Navigation("Expenses");
+                    b.Navigation("Despesas");
                 });
 
-            modelBuilder.Entity("ClienteApi.Models.TypeOfAccommodation", b =>
+            modelBuilder.Entity("ClienteApi.Models.DescricaoDespesa", b =>
                 {
-                    b.Navigation("Expenses");
+                    b.Navigation("Despesas");
                 });
 
-            modelBuilder.Entity("ClienteApi.Models.TypeOfLocation", b =>
+            modelBuilder.Entity("ClienteApi.Models.Despesa", b =>
                 {
-                    b.Navigation("Expenses");
+                    b.Navigation("Arquivos");
                 });
 #pragma warning restore 612, 618
         }

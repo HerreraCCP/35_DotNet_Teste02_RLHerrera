@@ -8,14 +8,7 @@ namespace ClienteApi.Controllers
     public class HomeController : BaseController
     {
         [HttpGet("")]
-        public IActionResult Get(
-            [FromServices] IConfiguration config)
-        {
-            var env = config.GetValue<string>("Env");
-            return Ok(new
-            {
-                environmnet = env
-            });
-        }
+        public IActionResult Get([FromServices] IConfiguration config) =>
+            Ok(new {environmnet = config.GetValue<string>("Env")});
     }
 }

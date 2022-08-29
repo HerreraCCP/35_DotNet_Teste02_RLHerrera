@@ -1,12 +1,16 @@
+using ClienteApi.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ClienteApi.Data.Configurations
 {
     public static class DependencyInjectionConfig
     {
-        public static IServiceCollection ResolveDependencies(this IServiceCollection services)
+        public static void ResolveDependencies(this IServiceCollection services)
         {
-            return services;
+            services.AddScoped<ArquivoService, ArquivoService>();
+            services.AddScoped<DespesaService, DespesaService>();
+            services.AddScoped<AcomodacaoService, AcomodacaoService>();
+            services.AddScoped<DescricaoDespesaService, DescricaoDespesaService>();
         }
     }
 }
