@@ -23,14 +23,46 @@ namespace UsuariosApi.Data
                 .Where(p => p.ClrType == typeof(string))))
                 property.SetColumnType("varchar(100)");
 
-            builder.ApplyConfigurationsFromAssembly(typeof(UserDbContext).Assembly);
-
             foreach (var relationship in builder.Model
                 .GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
+            builder.ApplyConfigurationsFromAssembly(typeof(UserDbContext).Assembly);
             base.OnModelCreating(builder);
+
+            //User Admin
+            IdentityUser<int> admin = new IdentityUser<int>
+            {
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                Email = "herrera.ccp@gmail.com",
+                NormalizedEmail = "HERRERA.CCP@GMAIL.COM",
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Id = 99999999
+            };
+            PasswordHasher<IdentityUser<int>> hasher = new PasswordHasher<IdentityUser<int>>();
+            admin.PasswordHash = hasher.HashPassword(admin, "@123Mudar");
+            builder.Entity<IdentityUser<int>>().HasData(admin);
+
+
+            builder.Entity<IdentityRole<int>>()
+                .HasData(
+                new IdentityRole<int>
+                {
+                    Id = 99999999,
+                    Name = "admin",
+                    NormalizedName = "ADMIN"
+                });
+            builder.Entity<IdentityUserRole<int>>()
+                .HasData(
+                new IdentityUserRole<int>
+                {
+                    RoleId = 99999999,
+                    UserId = 99999999
+                });
+            //
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

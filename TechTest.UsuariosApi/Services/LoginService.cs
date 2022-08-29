@@ -27,9 +27,9 @@ namespace UsuariosApi.Services
                 .UserManager
                 .Users
                 .FirstOrDefault(usuario => usuario.NormalizedUserName == request.Username.ToUpper());
-            var token = _tokenService.CreateToken(identityUser, _signInManager.UserManager.GetRolesAsync(identityUser).Result.FirstOrDefault());
+            var roles = _signInManager.UserManager.GetRolesAsync(identityUser).Result.FirstOrDefault();
+            var token = _tokenService.CreateToken(identityUser, roles);
             return Result.Ok();
-            //check
         }
 
         public Result ResetUserPassword(PerformResetRequest request)

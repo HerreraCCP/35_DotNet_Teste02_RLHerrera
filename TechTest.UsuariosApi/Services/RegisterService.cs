@@ -3,6 +3,7 @@ using FluentResults;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using UsuariosApi.Data.Dtos.Usuario;
 using UsuariosApi.Data.Requests;
@@ -13,7 +14,7 @@ namespace UsuariosApi.Services
     public class RegisterService
     {
         private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private UserManager<IdentityUser<int>> _userManager;
         private readonly EmailService _emailService;
         private RoleManager<IdentityRole<int>> _roleManager;
 
@@ -31,9 +32,10 @@ namespace UsuariosApi.Services
             var user = _mapper.Map<User>(createDto);
             var userIdentity = _mapper.Map<IdentityUser<int>>(user);
             var resultIdentity = _userManager.CreateAsync(userIdentity, createDto.Password);
-            var roleManagerResult = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result;
-            var usuarioRoleResult = _userManager.AddToRolesAsync(userIdentity, new List<string> { "admin" }).Result;
-            // var usuarioRoleResult = _userManager.AddToRolesAsync(userIdentity, "admin").Result;
+
+
+            //var roleManagerResult = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result;
+            //var usuarioRoleResult = _userManager.AddToRoleAsync(userIdentity, "admin").Result;
 
             if (!resultIdentity.Result.Succeeded) return Result.Fail("Deu ruim ao cadastrar usuário");
 
@@ -43,7 +45,6 @@ namespace UsuariosApi.Services
             _emailService.SendEmail(new[] { userIdentity.Email }, "Link de Ativação", userIdentity.Id, encodedCode);
             return Result.Ok().WithSuccess(code);
         }
-
         public Result ActivateUserAccount(ActivateAccountRequest request)
         {
             var identityUser = _userManager.Users.FirstOrDefault(u => u.Id == request.UserId);
