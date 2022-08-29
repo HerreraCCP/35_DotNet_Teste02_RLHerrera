@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentResults;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using UsuariosApi.Data.Dtos;
 using UsuariosApi.Data.Dtos.Usuario;
 using UsuariosApi.Data.Requests;
 using UsuariosApi.Models;

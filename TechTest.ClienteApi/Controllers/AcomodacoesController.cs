@@ -53,8 +53,8 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpPost("v1/acomodacoes")]
         [Authorize(Roles = "admin")]
+        [HttpPost("v1/acomodacoes")]
         public async Task<IActionResult> PostAsync([FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
         {
@@ -84,6 +84,7 @@ namespace ClienteApi.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("v1/acomodacoes/{id:int}")]
         public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
@@ -112,8 +113,8 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpDelete("v1/acomodacoes/{id:int}")]
         [Authorize(Roles = "admin")]
+        [HttpDelete("v1/acomodacoes/{id:int}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id, [FromServices] ClienteDbContext context)
         {
             try

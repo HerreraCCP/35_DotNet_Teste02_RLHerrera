@@ -1,7 +1,7 @@
-using System;
 using ClienteApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace ClienteApi.Data.Mappings
 {
@@ -57,11 +57,9 @@ namespace ClienteApi.Data.Mappings
 
             builder
                 .HasOne(x => x.Acomodacao)
-                .WithMany(x => x.Expenses)
-                .HasConstraintName("FK_Expenses_Acomodacao")
+                .WithMany(x => x.Despesas)
+                .HasConstraintName("FK_Despesas_Acomodacao")
                 .OnDelete(DeleteBehavior.Cascade);
-
-            //TODO UserID
         }
     }
 }

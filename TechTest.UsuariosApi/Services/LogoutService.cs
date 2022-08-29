@@ -1,7 +1,5 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using UsuariosApi.Interfaces;
 
 namespace UsuariosApi.Services
 {

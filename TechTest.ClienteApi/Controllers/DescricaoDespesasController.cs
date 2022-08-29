@@ -2,6 +2,8 @@
 using ClienteApi.Extensions;
 using ClienteApi.Models;
 using ClienteApi.ViewModels;
+using ClienteApi.ViewModels.Acomodacao;
+using ClienteApi.ViewModels.DescricaoDespesa;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -9,8 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ClienteApi.ViewModels.Acomodacao;
-using ClienteApi.ViewModels.DescricaoDespesa;
 
 namespace ClienteApi.Controllers
 {

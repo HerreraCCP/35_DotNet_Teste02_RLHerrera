@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClienteApi.Data.Mappings
 {
-    public class ExpenseDescriptionMap : IEntityTypeConfiguration<DescricaoDespesa>
+    public class DescricaoDespesaMap : IEntityTypeConfiguration<DescricaoDespesa>
     {
         public void Configure(EntityTypeBuilder<DescricaoDespesa> builder)
         {

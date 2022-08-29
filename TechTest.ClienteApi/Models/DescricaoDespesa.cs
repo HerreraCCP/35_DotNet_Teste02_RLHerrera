@@ -12,6 +12,6 @@ namespace ClienteApi.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Anotacoes { get; set; }
 
-        public List<Despesa> Despesas { get; set; }
+        public IList<Despesa> Despesas { get; set; }
     }
 }

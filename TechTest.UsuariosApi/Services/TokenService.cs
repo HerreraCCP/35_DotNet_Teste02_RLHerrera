@@ -4,7 +4,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using UsuariosApi.Interfaces;
 using UsuariosApi.Models;
 
 namespace UsuariosApi.Services

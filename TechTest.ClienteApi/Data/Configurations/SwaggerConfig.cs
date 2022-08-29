@@ -6,9 +6,9 @@ namespace ClienteApi.Data.Configurations
 {
     public static class SwaggerConfig
     {
-        public static IServiceCollection ResolveSwaggerConfig(this IServiceCollection services)
+        public static void ResolveSwaggerConfig(this IServiceCollection services)
         {
-            return services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
