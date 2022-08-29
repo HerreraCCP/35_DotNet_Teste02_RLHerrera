@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UsuariosApi.Data;
 
 namespace UsuariosApi.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220829162933_User Admin")]
+    partial class UserAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,16 +53,9 @@ namespace UsuariosApi.Migrations
                         new
                         {
                             Id = 99999999,
-                            ConcurrencyStamp = "3a407a4f-1451-469e-975c-93ed7211913d",
+                            ConcurrencyStamp = "a77b74d7-1b11-484d-b0f0-40fde8f6dec3",
                             Name = "admin",
                             NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ConcurrencyStamp = "30b34b43-50bd-4006-b5c1-9c7881d1a9fa",
-                            Name = "regular",
-                            NormalizedName = "REGULAR"
                         });
                 });
 
@@ -158,15 +153,15 @@ namespace UsuariosApi.Migrations
                         {
                             Id = 99999999,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f8ad2981-0e4c-444d-af62-bbf48f26e7d3",
+                            ConcurrencyStamp = "420f4005-d1b9-49e9-bcc0-6678284f7ef3",
                             Email = "herrera.ccp@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "HERRERA.CCP@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMEOEDZV8AGdn66i0cVFUqpAGN0gSOUJsC1A7C0syuHM3MC7r9CpKnAHhl2bX480AA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECnZzGCzu1LrgnzDwWbFEz4dfGKFkzMR8JiCmTEz9DEi20BCUeUpp9l9gi33+hnbmg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc475f09-9b69-4210-a9e2-be21a253e668",
+                            SecurityStamp = "6e6e1d41-f802-4f5c-82a0-7b9df26818b1",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

@@ -53,7 +53,7 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, regular, user")]
         [HttpPost("v1/acomodacoes")]
         public async Task<IActionResult> PostAsync([FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
