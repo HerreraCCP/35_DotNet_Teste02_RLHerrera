@@ -12,28 +12,19 @@ namespace ClienteApi.Data
     {
         private readonly ClienteDbContext _clienteDbContext;
 
-        public ClienteDbContext(DbContextOptions<ClienteDbContext> options, ClienteDbContext clienteDbContext) : base(options)
-        {
-            _clienteDbContext = clienteDbContext;
-        }
+        public ClienteDbContext(DbContextOptions<ClienteDbContext> options, ClienteDbContext clienteDbContext) : base(options) => _clienteDbContext = clienteDbContext;
 
-        public DbSet<Archive> Archives { get; set; }
+        public DbSet<Acomodacao> Acomodacoes { get; set; }
 
-        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<Arquivo> Arquivos { get; set; }
 
-        public DbSet<ExpenseDescription> ExpenseDescriptions { get; set; }
+        public DbSet<DescricaoDespesa> DescricaoDespesas { get; set; }
 
-        public DbSet<TypeOfAccommodation> TypeOfAccommodations { get; set; }
-
-        public DbSet<TypeOfLocation> TypeOfLocations { get; set; }
+        public DbSet<Despesa> Despesas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ArchivesMap());
-            modelBuilder.ApplyConfiguration(new ExpenseDescriptionMap());
-            modelBuilder.ApplyConfiguration(new ExpenseMap());
-            modelBuilder.ApplyConfiguration(new TypeOfAccommodationMap());
-            modelBuilder.ApplyConfiguration(new TypeOfLocationMap());
+            modelBuilder.ApplyConfiguration(new ArquivosMap());
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

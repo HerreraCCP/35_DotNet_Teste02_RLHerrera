@@ -15,14 +15,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Attributes" />
-		<Folder Include="Services\Archive\" />
-		<Folder Include="Services\Expense\" />
-		<Folder Include="Services\ExpenseDescription\" />
-		<Folder Include="Services\TypeOfLocation\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Content Update="appsettings.Development.json">
 			<DependentUpon>appsettings.json</DependentUpon>
 		</Content>
