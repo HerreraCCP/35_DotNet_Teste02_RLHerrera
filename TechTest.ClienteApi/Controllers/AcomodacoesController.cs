@@ -2,6 +2,8 @@
 using ClienteApi.Extensions;
 using ClienteApi.Models;
 using ClienteApi.ViewModels;
+using ClienteApi.ViewModels.Acomodacao;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -9,15 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ClienteApi.ViewModels.Acomodacao;
 
 namespace ClienteApi.Controllers
 {
     [ApiController]
-    [Route("v1/acomodacoes")]
+    [Route("[controller]")]
     public class AcomodacoesController : HomeController
     {
-        [HttpGet]
+        [HttpGet("v1/acomodacoes")]
         public IActionResult GetAsync([FromServices] IMemoryCache cache, [FromServices] ClienteDbContext context)
         {
             try
@@ -36,7 +37,7 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("v1/acomodacoes/{id:int}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id, [FromServices] ClienteDbContext context)
         {
             try
@@ -52,7 +53,8 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("v1/acomodacoes")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> PostAsync([FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
         {
@@ -82,7 +84,7 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("v1/acomodacoes/{id:int}")]
         public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
         {
@@ -110,7 +112,8 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("v1/acomodacoes/{id:int}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id, [FromServices] ClienteDbContext context)
         {
             try

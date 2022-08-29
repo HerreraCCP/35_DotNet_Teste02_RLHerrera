@@ -15,7 +15,7 @@ using ClienteApi.ViewModels.DescricaoDespesa;
 namespace ClienteApi.Controllers
 {
     [ApiController]
-    [Route("v1/descricaodespesas")]
+    [Route("[controller]")]
     public class DescricaoDespesasController : HomeController
     {
         [HttpGet]
@@ -37,7 +37,7 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("v1/descricaodespesas/{id:int}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id, [FromServices] ClienteDbContext context)
         {
             try
@@ -81,7 +81,7 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpPut("v1/acomodacoes/{id:int}")]
+        [HttpPut("v1/descricaodespesas/{id:int}")]
         public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
         {
@@ -109,7 +109,7 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [HttpDelete("v1/acomodacoes/{id:int}")]
+        [HttpDelete("v1/descricaodespesas/{id:int}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id, [FromServices] ClienteDbContext context)
         {
             try
