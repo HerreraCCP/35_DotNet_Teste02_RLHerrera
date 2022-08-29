@@ -19,6 +19,7 @@ namespace ClienteApi.Controllers
     public class AcomodacoesController : HomeController
     {
         [HttpGet("v1/acomodacoes")]
+        [Authorize(Roles = "regular, user")]
         public IActionResult GetAsync([FromServices] IMemoryCache cache, [FromServices] ClienteDbContext context)
         {
             try
@@ -38,6 +39,7 @@ namespace ClienteApi.Controllers
         }
 
         [HttpGet("v1/acomodacoes/{id:int}")]
+        [Authorize(Roles = "regular, user")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id, [FromServices] ClienteDbContext context)
         {
             try
@@ -53,8 +55,8 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [Authorize(Roles = "admin, regular, user")]
         [HttpPost("v1/acomodacoes")]
+        [Authorize(Roles = "regular, user", Policy = "MyPolicy")]
         public async Task<IActionResult> PostAsync([FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
         {
@@ -84,8 +86,7 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [Authorize(Roles = "admin")]
-        [HttpPut("v1/acomodacoes/{id:int}")]
+        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
         {
@@ -113,8 +114,8 @@ namespace ClienteApi.Controllers
             }
         }
 
-        [Authorize(Roles = "admin")]
         [HttpDelete("v1/acomodacoes/{id:int}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id, [FromServices] ClienteDbContext context)
         {
             try

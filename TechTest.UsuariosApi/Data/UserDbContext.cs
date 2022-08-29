@@ -6,10 +6,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UsuariosApi.Models;
 
 namespace UsuariosApi.Data
 {
-    public sealed class UserDbContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
+    public sealed class UserDbContext : IdentityDbContext<CustomIdentityUser, IdentityRole<int>, int>
     {
         private IConfiguration _configuration;
 
@@ -36,7 +37,7 @@ namespace UsuariosApi.Data
             base.OnModelCreating(builder);
 
             //User Admin
-            IdentityUser<int> admin = new IdentityUser<int>
+            CustomIdentityUser admin = new CustomIdentityUser
             {
                 UserName = "admin",
                 NormalizedUserName = "ADMIN",
@@ -47,10 +48,10 @@ namespace UsuariosApi.Data
                 Id = 99999999
             };
 
-            PasswordHasher<IdentityUser<int>> hasher = new PasswordHasher<IdentityUser<int>>();
+            PasswordHasher<CustomIdentityUser> hasher = new PasswordHasher<CustomIdentityUser>();
             admin.PasswordHash = hasher.HashPassword(admin, _configuration.GetValue<string>("admininfo:password"));
 
-            builder.Entity<IdentityUser<int>>().HasData(admin);
+            builder.Entity<CustomIdentityUser>().HasData(admin);
             builder.Entity<IdentityRole<int>>().HasData(new IdentityRole<int> { Id = 99999999, Name = "admin", NormalizedName = "ADMIN" });
             builder.Entity<IdentityRole<int>>().HasData(new IdentityRole<int> { Id = 00000010, Name = "regular", NormalizedName = "REGULAR" });
             builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int> { RoleId = 99999999, UserId = 99999999 });

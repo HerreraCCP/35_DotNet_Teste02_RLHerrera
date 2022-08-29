@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ClienteApi.ViewModels.DescricaoDespesa
 {

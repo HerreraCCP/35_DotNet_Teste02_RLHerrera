@@ -1,4 +1,6 @@
+using ClienteApi.Authorization;
 using ClienteApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ClienteApi.Data.Configurations
@@ -11,6 +13,7 @@ namespace ClienteApi.Data.Configurations
             services.AddScoped<DespesaService, DespesaService>();
             services.AddScoped<AcomodacaoService, AcomodacaoService>();
             services.AddScoped<DescricaoDespesaService, DescricaoDespesaService>();
+            services.AddSingleton<IAuthorizationHandler, MyPolicyRequirementHandler>();
         }
     }
 }
