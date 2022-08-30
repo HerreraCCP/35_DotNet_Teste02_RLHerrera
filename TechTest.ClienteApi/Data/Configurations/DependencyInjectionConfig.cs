@@ -13,7 +13,7 @@ namespace ClienteApi.Data.Configurations
             services.AddScoped<DespesaService, DespesaService>();
             services.AddScoped<AcomodacaoService, AcomodacaoService>();
             services.AddScoped<DescricaoDespesaService, DescricaoDespesaService>();
-            services.AddSingleton<IAuthorizationHandler, MyPolicyRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, IdadeMinimaHandler>();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace ClienteApi.Controllers
         }
 
         [HttpPost("v1/acomodacoes")]
-        [Authorize(Roles = "regular, user", Policy = "MyPolicy")]
+        [Authorize(Roles = "regular, user", Policy = "IdadeMinima")]
         public async Task<IActionResult> PostAsync([FromBody] EditAcomodacaoViewModel model,
             [FromServices] ClienteDbContext context)
         {

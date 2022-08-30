@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,8 +15,8 @@ namespace UsuariosApi.Services
             {
                 new Claim("username", user.UserName),
                 new Claim("id", user.Id.ToString()),
-                new Claim(ClaimTypes.Role, role)
-                new Claim(ClaimTypes.DateOfBirth, user)
+                new Claim(ClaimTypes.Role, role),
+                new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString())
             };
 
             SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes("ZmVkYWY3ZDg4NjNiNDhlMTk3YjkyODdkNDkyYjcwOGU="));

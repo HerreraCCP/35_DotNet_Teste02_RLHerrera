@@ -6,8 +6,6 @@ namespace ClienteApi.Data
 {
     public sealed partial class ClienteDbContext : DbContext
     {
-        private readonly ClienteDbContext _clienteDbContext;
-
         public ClienteDbContext(DbContextOptions<ClienteDbContext> options) : base(options) { }
 
         public DbSet<Acomodacao> Acomodacoes { get; set; }

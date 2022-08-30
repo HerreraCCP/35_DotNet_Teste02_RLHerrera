@@ -33,9 +33,9 @@ namespace ClienteApi
 
             services.AddAuthorization(option =>
             {
-                option.AddPolicy("MyPolicyIdadeMinima", policy =>
+                option.AddPolicy("IdadeMinima", policy =>
                 {
-                    policy.Requirements.Add(new MyPolicyRequirement(10));
+                    policy.Requirements.Add(new IdadeMinimaRequirement(10));
                 });
             });
         }
