@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using ClienteApi.Authorization;
 
 namespace ClienteApi
 {
@@ -29,6 +30,14 @@ namespace ClienteApi
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+
+            services.AddAuthorization(option =>
+            {
+                option.AddPolicy("IdadeMinima", policy =>
+                {
+                    policy.Requirements.Add(new IdadeMinimaRequirement(10));
+                });
+            });
         }
     }
 }

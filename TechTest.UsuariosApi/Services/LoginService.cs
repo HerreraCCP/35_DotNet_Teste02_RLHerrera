@@ -2,15 +2,16 @@ using FluentResults;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using UsuariosApi.Data.Requests;
+using UsuariosApi.Models;
 
 namespace UsuariosApi.Services
 {
     public class LoginService
     {
-        private readonly SignInManager<IdentityUser<int>> _signInManager;
+        private readonly SignInManager<CustomIdentityUser> _signInManager;
         private readonly TokenService _tokenService;
 
-        public LoginService(SignInManager<IdentityUser<int>> signInManager, TokenService tokenService)
+        public LoginService(SignInManager<CustomIdentityUser> signInManager, TokenService tokenService)
         {
             _signInManager = signInManager;
             _tokenService = tokenService;
@@ -49,7 +50,7 @@ namespace UsuariosApi.Services
                 : Result.Ok().WithSuccess(_signInManager.UserManager.GeneratePasswordResetTokenAsync(identityUser).Result);
         }
 
-        private IdentityUser<int> RecuperaUsuarioPorEmail(string email) =>
+        private CustomIdentityUser RecuperaUsuarioPorEmail(string email) =>
             _signInManager.UserManager.Users.FirstOrDefault(u => u.NormalizedEmail == email.ToUpper());
     }
 }

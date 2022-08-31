@@ -15,28 +15,28 @@ namespace UsuariosApi.Services
     public class RegisterService
     {
         private readonly IMapper _mapper;
-        private UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<CustomIdentityUser> _userManager;
         private readonly EmailService _emailService;
-        private RoleManager<IdentityRole<int>> _roleManager;
 
-        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService, RoleManager<IdentityRole<int>> roleManager)
+        public RegisterService(IMapper mapper, UserManager<CustomIdentityUser> userManager, EmailService emailService, RoleManager<IdentityRole<int>> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
             _emailService = emailService;
-            _roleManager = roleManager;
         }
 
         public Result UserRegistration(CreateUserDto createDto)
         {
             var user = _mapper.Map<User>(createDto);
-            var userIdentity = _mapper.Map<IdentityUser<int>>(user);
+            var userIdentity = _mapper.Map<CustomIdentityUser>(user);
             var resultIdentity = _userManager.CreateAsync(userIdentity, createDto.Password);
 
+            
+            ///Only for test different user's roles
             var rnd = new Random();
-
             if (rnd.Next(1, 13) % 2 == 0) _userManager.AddToRoleAsync(userIdentity, "user");
             else _userManager.AddToRoleAsync(userIdentity, "regular");
+            //End
 
             if (!resultIdentity.Result.Succeeded) return Result.Fail("Deu ruim ao cadastrar usuário");
 
@@ -49,8 +49,8 @@ namespace UsuariosApi.Services
 
         public Result ActivateUserAccount(ActivateAccountRequest request)
         {
-            var identityUser = _userManager.Users.FirstOrDefault(u => u.Id == request.UserId);
-            var identityResult = _userManager.ConfirmEmailAsync(identityUser, request.ActivateCode).Result;
+            var customIdentityUser = _userManager.Users.FirstOrDefault(u => u.Id == request.UserId);
+            var identityResult = _userManager.ConfirmEmailAsync(customIdentityUser, request.ActivateCode).Result;
             return identityResult.Succeeded ? Result.Ok() : Result.Fail("Deu ruim ao ativar conta de usuário");
         }
     }

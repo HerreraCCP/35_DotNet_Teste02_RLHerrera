@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UsuariosApi.Data;
+using UsuariosApi.Models;
 
 namespace UsuariosApi.Configurations
 {
@@ -22,7 +23,7 @@ namespace UsuariosApi.Configurations
 
             services.AddDbContext<UserDbContext>(options => options.UseSqlServer(connectionString));
             services
-                .AddIdentity<IdentityUser<int>, IdentityRole<int>>(opt => opt.SignIn.RequireConfirmedEmail = true)
+                .AddIdentity<CustomIdentityUser, IdentityRole<int>>(opt => opt.SignIn.RequireConfirmedEmail = true)
                 .AddEntityFrameworkStores<UserDbContext>()
                 .AddDefaultTokenProviders();
 

@@ -5,11 +5,11 @@ using UsuariosApi.Services;
 
 namespace UsuariosApi.Controllers.Login
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class RegisterController : BaseController
     {
-        private RegisterService _registerService;
+        private readonly RegisterService _registerService;
 
         public RegisterController(RegisterService registerService) => _registerService = registerService;
 
