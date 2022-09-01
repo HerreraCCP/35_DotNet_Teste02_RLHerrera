@@ -1,4 +1,4 @@
-<h1><b> Project Chapter Applied in technical test by company in Brazil.</b></h1>
+<h1><b> Project Chapter Applied in technical test by Company.</b></h1>
 Email: <a href = "herrera.ccp@gmail.com"> herrera.ccp</a>
 
 <h3><b> Abstract </b></h3>
